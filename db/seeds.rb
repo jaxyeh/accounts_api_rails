@@ -5,5 +5,7 @@ require 'faker'
 
 5.times do |i|
   acct = Account.create(name: Faker::Internet.user_name)
-  acct.domains.create(hostname: Faker::Internet.domain_name, origin_ip_address:  Faker::Internet.ip_v4_address)
+  rand(1..3).times do |i|
+    acct.domains.create(hostname: Faker::Internet.domain_name, origin_ip_address:  Faker::Internet.ip_v4_address)
+  end
 end
