@@ -1,0 +1,122 @@
+<h3>Ruby/JavaScript Engineer Exercise Demo</h3>
+<style>
+    /* Table Style */
+    table {
+        width:100%;
+    }
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+    th, td {
+        padding: 5px;
+        text-align: left;
+    }
+    table tr:nth-child(even) {
+        background-color: #eee;
+    }
+    table tr:nth-child(odd) {
+        background-color:#fff;
+    }
+    table th	{
+        background-color: black;
+        color: white;
+    }
+</style>
+
+<script type="text/javascript">
+
+// EXCERCISE PART 1
+
+    function loadAccounts() {
+
+        request = new XMLHttpRequest();
+        request.open('GET', '/api/accounts/domains', true);
+        request.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+        request.setRequestHeader('x-distil-blocks', getBotsName());
+
+        request.onload = function () {
+            if (request.status >= 200 && request.status < 400) {
+                // Success
+                data = JSON.parse(request.responseText); // Parse JSON
+                showTable(data); // Show HTML Tables
+            } else {
+                console.log('There was an error with request')
+            }
+        };
+
+        request.onerror = function () {
+            console.log('There was an error with connection')
+        };
+
+        request.send();
+    }
+
+    // Bots Incremental Value
+    var incValue = 0;
+
+    // Load timer when browser's content is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        // Trigger Interval Timer for every 10 seconds
+        setInterval( function() {
+            this.incValue++;
+        }, 10000);
+
+    });
+
+// EXCERCISE PART 2
+
+    function getBotsName() {
+        var value = "bots"
+        if (incValue > 0) {
+            value = "bots-" + incValue;
+        }
+        return value;
+    }
+
+// Table Results
+
+    function showTable(data) {
+
+        var elem = document.getElementById("output");
+        if (elem != null) {
+            elem.parentNode.removeChild(elem);
+        }
+
+        if (data == null) {
+            console.log("Error, Data is empty!")
+            return;
+        }
+
+        for(var index in data){
+            console.log("Name: " + data[index]['name']);
+        }
+
+        var usersTable = '<table><thead><tr><th>Id</th><th>Name</th><th>Domain(s)</th></tr></thead><tbody>';
+        for(var index in data){
+            usersTable = usersTable + '<tr><td>' + data[index]['id'] + '</td><td>' + data[index]['name'] + '</td>';
+
+            if (data[index]['domains'].length > 0) {
+                var domainsTable = '<table><thead><tr><th>Id</th><th>Hostname</th><th>IP Address</th></tr></thead><tbody>';
+                for(var idx in data[index]['domains']){
+                    domainsTable = domainsTable + '<tr><td>' + data[index]['domains'][idx]['id'] +
+                            '</td><td>' + data[index]['domains'][idx]['hostname'] +
+                            '</td><td>' + data[index]['domains'][idx]['origin_ip_address'] + '</td></tr>';
+                }
+                domainsTable = domainsTable + '</tbody></table>';
+                usersTable = usersTable + '<td>' + domainsTable + '</td></tr>';
+            } else {
+                usersTable = usersTable + '<td><i>undefined</i></td></tr>';
+            }
+        }
+        usersTable = usersTable + '</tbody></table>';
+
+        var div = document.createElement("div");
+        div.setAttribute("id", "output");
+        div.innerHTML = usersTable;
+        document.getElementsByTagName('body')[0].appendChild(div);
+    }
+
+</script>
+
+<button onclick="loadAccounts()">Retrieve Accounts Details</button>
