@@ -24,10 +24,20 @@ The application shall install and uses Ruby on Rails 4.1+. Here below is the bas
 
 After installation, you can fire up the local web server with the following commands:
 
-    > rails s
+    $ rails s
 
-To see your application in action, open a browser window and navigate to http://localhost:3000. For interaction with API Web Service, please open `api_doc/index.html` file into your browser.
+To see your application in action, open a browser window and navigate to http://localhost:3000.
+
+Please use API documentation below to understand how to interact with dataset, however you can use this command to create fake dataset:
+
+    $ rake db:seed
+
+> **NOTICE:** The JavaScript example can be found at `app/views/site/index.html.erb` and its running custom headers via AJAX requests.
+
+## API Documentation
+
+For interaction with API Web Service, please open `api_doc/index.html` file into your browser.
 
 # License
 
-Released under the [MIT license](http://opensource.org/licenses/MIT).
+Released under the [Unlicense](http://unlicense.org/). o_O
