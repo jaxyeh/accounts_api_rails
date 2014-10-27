@@ -32,7 +32,7 @@ Please use API documentation below to understand how to interact with dataset, h
 
     $ rake db:seed
 
-> **NOTICE:** The JavaScript example can be found at `app/views/site/index.html.erb` and its running custom headers via AJAX requests.
+> **NOTICE:** The JavaScript example code can be found at `app/views/site/index.html.erb` where it handles the custom headers via AJAX requests. To validate the behavior, you may use `Inspect Element` tool provided by web browser and inspect Request Headers within the given actions every time you click on `Retrieve Account Details` button.
 
 ## API Documentation
 
